@@ -12,8 +12,13 @@ header {
     text-align: center;
 }
 
+nav form {
+    margin: auto;
+}
+
 #question {
-    width: 400px;
+    width: 500px;
+    height: 400px;
     border: 1px solid #c3c3c3;
     display: flex;
     justify-content: space-evenly;
@@ -22,11 +27,24 @@ header {
 }
 
 #options {
-    display: inline-block;
+    display: flex;
     width: 400px;
     height: 100px;
     margin-left: 50%;
+    justify-content: space-between;
     transform: translateX(-50%);
+}
+
+#options button {
+    display: inline-block;
+    background-color: #eeeeee;
+    border-radius: 10px;
+    border: 4px double #cccccc;
+    color: #918989;
+    text-align: center;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
 }
 
 #categories {
