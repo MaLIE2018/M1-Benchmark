@@ -18,11 +18,26 @@
     </header>
     <nav>
         <hr>
-        <h2>Test test test</h2>
+        <form>
+            <label for="category">Choose a category</label>
+            <select name="category" id="category">
+                <option value="23">History</option>
+                <option value="18">Computer Science</option>
+                <option value="24">Politics</option></select>
+            <label for="difficulty">Choose your level</label>
+            <select name="difficulty" id="difficulty">
+                <option value="easy">easy</option>
+                <option value="medium">medium</option>
+                <option value="hard">hard</option>
+            </select>
+            <label for="numOfQuestions">Number of Questions</label>
+            <input type="number" name="" id="numOfQuestions" min="1" max="50" value="10" required>
+            <input type="submit" value="Submit" onclick="grabData()">
+        </form>
         <hr>
     </nav>
     <div id="question">
-        <h2 id="currentQuestion">question</h2>
+        <h2 id="currentQuestion">Ready to quiz?</h2>
     </div>
     <div id="options">
         <!-- <div id="multiple">
@@ -34,6 +49,8 @@
     </div>
     </div>
     <script src="/assets/js/script.js"></script>
+    <script src="/assets/js/test.js"></script>
+
 </body>
 
 </html>

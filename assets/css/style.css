@@ -1,7 +1,7 @@
 body {
     font-family: 'Noto Sans JP', sans-serif;
     background-color: #F0FFFF;
-    margin: 0;
+    margin: 5px;
 }
 
 hr {
@@ -27,4 +27,8 @@ header {
     height: 100px;
     margin-left: 50%;
     transform: translateX(-50%);
+}
+
+#categories {
+    display: inline-block;
 }
