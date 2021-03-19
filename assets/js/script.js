@@ -95,7 +95,8 @@
 let score = 0
 let questions = undefined
 let userAnswers = []
-let count = 10 //number of questions
+let count = 0 //count for array of questions
+let userChoice = 10
 let question = document.querySelector("#currentQuestion")
 let options = document.querySelector("#options")
 
@@ -105,16 +106,16 @@ const grabData = async(event) => {
     event.preventDefault()
     let category = parseInt(document.querySelector("#category").value)
     let difficulty = document.querySelector("#difficulty").value
-    let count = parseInt(document.querySelector("#numOfQuestions").value)
+    let userChoice = parseInt(document.querySelector("#numOfQuestions").value)
         //fetch data
-    let response = await fetch(`https://opentdb.com/api.php?amount=${count}&category=${category}&difficulty=${difficulty}`)
+    let response = await fetch(`https://opentdb.com/api.php?amount=${userChoice}&category=${category}&difficulty=${difficulty}`)
     let data = await response.json()
-    console.log('data:', data)
-    generateAndFilQuestionAnswerElements(data)
+    questions = data["results"]
+    generateAndFilQuestionAnswerElements()
 }
 
-const generateAndFilQuestionAnswerElements = function(data) {
-    questions = data["results"]
+const generateAndFilQuestionAnswerElements = function() {
+
     console.log('questions:', questions)
     question.innerHTML = questions[count].question
     let answers = questions[count].incorrect_answers
@@ -141,9 +142,10 @@ const validateAnswer = (event, i) => {
     setTimeout(() => {
         if (count < questions.length) {
             options.innerHTML = ""
-            displayQuestion(count)
+            generateAndFilQuestionAnswerElements()
 
         } else {
+            options.innerHTML = ""
             question.innerText = `Your Score is ${score}`
         }
     }, 422)
