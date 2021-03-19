@@ -101,7 +101,8 @@ let options = document.querySelector("#options")
 
 
 
-const grabData = async() => {
+const grabData = async(event) => {
+    event.preventDefault()
     let category = parseInt(document.querySelector("#category").value)
     let difficulty = document.querySelector("#difficulty").value
     let count = parseInt(document.querySelector("#numOfQuestions").value)
@@ -109,10 +110,7 @@ const grabData = async() => {
     let response = await fetch(`https://opentdb.com/api.php?amount=${count}&category=${category}&difficulty=${difficulty}`)
     let data = await response.json()
     console.log('data:', data)
-
-
-    //anotherFunction()
-    //generateAndFilQuestionAnswerElements(data)
+    generateAndFilQuestionAnswerElements(data)
 }
 
 const generateAndFilQuestionAnswerElements = function(data) {

@@ -6,14 +6,11 @@ let result = ""
 
 
 const grabData1 = async() => {
+
     let response = await fetch(`https://opentdb.com/api.php?amount=${count}&category=${category}&difficulty=${difficulty}`)
     let data = await response.json()
-    console.log('data:', data["results"])
+        //console.log('data:', data["results"])
 }
 
 
-
-//
-const startQuiz = () => {
-    grabData1()
-}
+//grabData1()
