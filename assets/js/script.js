@@ -11,6 +11,7 @@ let options = document.querySelector("#options")
 const grabData = async(event) => {
     event.preventDefault()
     count = 0
+    score = 0
     options.innerHTML = ""
     let category = parseInt(document.querySelector("#category").value)
     let difficulty = document.querySelector("#difficulty").value
@@ -52,7 +53,7 @@ const validateAnswer = (event) => {
 
         } else {
             options.innerHTML = ""
-            question.innerText = `Your Score is ${score}`
+            question.innerText = `Your Score is ${score} from ${count}`
         }
     }, 422)
     count++
