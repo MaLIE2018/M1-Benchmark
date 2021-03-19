@@ -1,0 +1,30 @@
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background-color: #F0FFFF;
+    margin: 0;
+}
+
+hr {
+    color: #F0F8FF;
+}
+
+header {
+    text-align: center;
+}
+
+#question {
+    width: 400px;
+    border: 1px solid #c3c3c3;
+    display: flex;
+    justify-content: space-evenly;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+
+#options {
+    display: inline-block;
+    width: 400px;
+    height: 100px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
