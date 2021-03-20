@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="#">
+    <title>Title</title>
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            max-width: 700;
+            margin-left: 50%;
+            transform: translateX(-50%);
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        header {
+            display: flex;
+            justify-content: center;
+        }
+        
+        nav p {
+            margin: auto;
+            font-weight: 300;
+            font-size: 13px;
+        }
+        
+        #table,
+        td,
+        tr {
+            border: 1px solid gainsboro;
+            margin: 0;
+        }
+        
+        td {
+            border: 1px solid green;
+            border-bottom: 1px dotted red;
+            border-top: 1px dotted red;
+        }
+        
+        #table {
+            border-radius: 8px;
+        }
+        
+        a {
+            color: green;
+            text-decoration: none;
+        }
+        
+        p {
+            margin-bottom: 45px;
+        }
+        
+        nav {
+            display: inline-block;
+        }
+        
+        input {
+            width: 50px;
+        }
+        
+        #list-section input {
+            width: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+    </header>
+    <nav>
+        <label for="fontsize">Fontsize</label>
+        <input type="number" name="" id="fontsize" min="15" max="30" value="16">
+        <label for="boldness">Boldness</label>
+        <input type="number" name="" id="boldness" min="300" max="900" value="300" step=100>
+        <p>Select Fontsize and Boldness and press Enter!</p>
+    </nav>
+    <section id="list-section">
+        <input type="button" value="Hide/Show" id="hideShow">
+        <div id="list-container">
+        </div>
+    </section>
+    <hr>
+    <div id="tableDiv">
+        <button id="deleteTd" onclick="deleteTd()">deleteRandomCell</button>
+        <button id="deleteTd" onclick="removeTable()">deleteTable</button>
+    </div>
+    <script>
+        const createTitle = () => {
+            let header = document.getElementsByTagName("header")[0]
+            let h1 = document.createElement("h1")
+            h1.innerText = "Exercises 1-50"
+            header.appendChild(h1)
+        }
+        createTitle()
+        const createTable = (c, r) => {
+            let table = document.createElement("table")
+            table.id = "table"
+            for (let i = 1; i <= r; i++) {
+                let tr = document.createElement("tr")
+                tr.classList.add('test')
+                for (let j = 1; j <= c; j++) {
+                    let td = document.createElement("td")
+                    td.innerText = `${j}`
+                    td.addEventListener("click", (event) => {
+                        event.target.style.backgroundColor = "red"
+                    })
+                    td.addEventListener("mouseover", (event) => {
+                        event.target.style.border = "1px solid pink"
+                    })
+                    tr.appendChild(td)
+                }
+                table.appendChild(tr)
+            }
+            document.getElementById("tableDiv").appendChild(table)
+        }
+        createTable(5, 5)
+
+        let table = document.getElementById("table")
+        const addImgs = () => {
+            for (let i = 0; i < table.children.length; i++) {
+                let img = document.createElement("img")
+                let anchor = document.createElement("a")
+                anchor.href = "https://www.google.com"
+                img.src = `https://picsum.photos/5${i}`
+                img.alt = `pic${i}`
+                anchor.appendChild(img)
+                table.children[i].firstChild.nextElementSibling.innerText = ''
+                table.children[i].firstChild.nextElementSibling.appendChild(anchor)
+            }
+        }
+        addImgs()
+
+        //one comment
+
+        const mergeCells = (c, r) => {
+            let table = document.getElementById("table")
+            let removedCell = table.children[r].children[c]
+            removedCell.nextElementSibling.classList.add("mergedCell")
+            removedCell.nextElementSibling.colSpan = "2"
+            table.children[r].removeChild(removedCell)
+        }
+        mergeCells(1, 1)
+
+        const uListAndPara = (count) => {
+            let listContainer = document.getElementById("list-container")
+            let ul = document.createElement('ul')
+            for (let i = 1; i <= count; i++) {
+                let li = document.createElement('li')
+                li.innerText = i
+                ul.appendChild(li)
+            }
+            listContainer.appendChild(ul)
+        }
+        uListAndPara(4)
+
+        const createFooter = () => {
+            let info = ["Maximilian Liebsch", "Full Stack Web Developer", "Berlin", "https://www.linkedin.com/nooneihaveliebscher"]
+            let body = document.getElementsByTagName("body")[0]
+            let footer = document.createElement("footer")
+            let link = document.createElement("a")
+
+            for (const item of info) {
+                let p = document.createElement("p")
+                if (item.startsWith("https")) {
+                    let link = document.createElement("a")
+                    link.href = item
+                    link.innerText = "LinkedIn"
+                    p.appendChild(link)
+                } else {
+                    p.innerText = item
+                }
+
+                footer.appendChild(p)
+            }
+            footer.appendChild(link)
+            body.appendChild(footer)
+
+        }
+        createFooter()
+
+
+        const changeFontsizeAndBoldness = (event) => {
+            let fontsize = document.getElementById("fontsize")
+            let boldness = document.getElementById("boldness")
+            let body = document.getElementsByTagName('body')[0]
+            document.addEventListener("keydown", (event) => {
+                if (event.code == "Enter") {
+                    body.style.fontSize = `${fontsize.value}px`
+                    body.style.fontWeight = boldness.value
+                }
+            })
+
+        }
+        changeFontsizeAndBoldness()
+
+        const hideShowContent = () => {
+            let button = document.getElementById("hideShow")
+            let list = document.getElementById("list-container")
+            button.addEventListener("click", () => {
+                if (list.style.visibility === "" || list.style.visibility === "visible") {
+                    list.style.visibility = "hidden"
+                } else {
+                    list.style.visibility = "visible"
+                }
+
+            })
+        }
+        hideShowContent()
+
+        const person = {
+            name: "Max",
+            email: "liebsch@pm.me"
+        }
+
+        delete(person.email)
+        console.log(person);
+
+        let StringArray = []
+        for (let i = 0; i < 10; i++) {
+            StringArray.push(`${i+1}`)
+        }
+        // StringArray.forEach(element => console.log(element))
+
+        let randomNumbers = []
+
+        for (let i = 0; i < 100; i++) {
+            randomNumbers.push(Math.floor(Math.random() * 1000 + 1))
+        }
+        // console.log(randomNumbers);
+        const minMaxValue = () => {
+            let smallest = randomNumbers[0]
+            let biggest = randomNumbers[0]
+
+            for (let i = 0; i < randomNumbers.length; i++) {
+
+                if (randomNumbers[i] < smallest) {
+                    smallest = randomNumbers[i]
+                }
+                if (randomNumbers[i] > biggest) {
+                    biggest = randomNumbers[i]
+                }
+
+            }
+            return `Min ${smallest} Max ${biggest}`
+        }
+        let matrix = []
+        const arrayofArrays = (params) => {
+
+            for (let i = 0; i < 10; i++) {
+                matrix.push([])
+                for (let j = 0; j < 10; j++) {
+                    matrix[i].push(Math.floor(Math.random() * 1000 + 1))
+                }
+            }
+        }
+
+        arrayofArrays()
+
+        let a = [1, 2, 3.4, 5, 6, 1]
+        let b = [2, 1, 2, 2, 2, 2, 3, 1]
+
+        const longestArr = () => {
+            return (a.length > b.length ? a : b)
+        }
+
+        const highestsum = () => {
+            let resulta = 0
+            let resultb = 0
+            a.forEach(element => {
+                resulta += element
+            });
+            b.forEach(element => {
+                resultb += element
+            });
+            return (resulta > resultb) ? resulta : resultb
+        }
+
+        console.log('document.getElementById("list-container"):', document.getElementById("list-container"))
+        console.log('document.getElementsByTagName("td"):', document.getElementsByTagName("td"))
+        tds = document.getElementsByTagName("td")
+            // for (const item of tds) {
+            //     console.log('element.innerText:', item.innerText)
+            // }
+        const linkBackground = () => {
+            let links = document.getElementsByTagName("a")
+            for (const a of links) {
+                a.style.backgroundColor = "red"
+            }
+        }
+        console.log(linkBackground());
+
+        // window.onload = () => {
+        //     alert("Page loaded")
+        // }
+        const newLitem = (text) => {
+            let listContainer = document.getElementById("list-container")
+            let ul = document.getElementsByTagName('ul')[0]
+            let li = document.createElement('li')
+            li.innerText = text
+            ul.appendChild(li)
+        }
+        newLitem("new Text")
+
+        const emptyList = () => {
+                let ul = document.getElementsByTagName('ul')[0]
+                console.log('ul:', ul)
+                ul.innerHTML = ""
+            }
+            //emptyList()
+
+        const deleteLastLatter = () => {
+            let title = document.getElementsByTagName("h1")[0]
+            console.log('title:', title)
+            title.addEventListener("click", (event) => {
+                event.target.innerText = event.target.innerText.slice(0, event.target.innerText.length - 1)
+            })
+
+        }
+        deleteLastLatter()
+
+        const deleteTd = () => {
+            let rows = document.getElementsByTagName("tr")
+            let randomRow = Math.floor(Math.random() * rows.length)
+            console.log('randomRow:', randomRow)
+            let cells = rows[randomRow].children
+
+            let stillExists = false
+            let randomCell = Math.floor(Math.random() * cells.length)
+            let i = 0
+            do {
+                randomCell = Math.floor(Math.random() * cells.length)
+                if (cells[randomCell] !== undefined) {
+                    rows[randomRow].removeChild(cells[randomCell])
+                    sitllExists = true
+                }
+            } while (stillExists)
+        }
+        const removeTable = () => {
+            let table = document.getElementById("table")
+            table.innerHTML = ""
+        }
+    </script>
+</body>
+
+</html>
