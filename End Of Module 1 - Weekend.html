@@ -1,0 +1,284 @@
+<!--
+    WEEKEND EXERCISES!
+
+    EX1.: Create a header for the page
+    EX2.: Create a subtitle for the page
+    EX3.: Create a table with 4 rows and 5 columns (ID, Name, Surname, Age, Email)
+    EX4.: Add a link to a Facebook profile for each of the IDs
+    EX5.: Add a text input "textChange" for plain text
+    EX6.: Add a button next to "textChange", when pressed the title and the H1 of the page must be changed with the content of "textChange"
+    EX7.: When the button is pressed, if "textChange" is empty, alert the user with a message
+    EX8.: Add a new section with title "Enrolled Students"
+    EX9.: Add an empty UL or DIV inside this new section
+    EX10.: Add an extra column to the Table named "actions"
+    EX11.: Add a button in each "action cell" with a "+" sign. When the button is pressed a new line must appear inside the "UL / DIV" in the enrolled section list
+    EX12.: Add button for each item of the list. When pressed, the student is removed from the list. 
+    EX13.: Create a simple form with 5 fields: ID, Name, Surname, Age, Email
+    EX14.: Create a button "add students" which adds a new row to the table
+    EX15.: Add a "counter section" in which there is always the number of items in the List
+
+  
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="shortcut icon" href="#">
+    <style>
+        input {
+            display: block;
+            margin-bottom: 2px;
+        }
+        
+        #input-columns {
+            columns: 100px 3;
+        }
+    </style>
+</head>
+<!-- //     EX16.: Add somewhere a button, on click, it changes the color of each item in the list in RED
+            // EX17.: Add somewhere a button, on click, it counts the number of entry in the list and shows it in a newly created paragraph
+            // EX18.: Add somewhere a button, on click, it swaps HEADER and Subtitle
+            // EX19.: Add somewhere a button, on click, change the table background to a random color -->
+
+<body>
+    <header>
+        <h1>Title</h1>
+        <h2>Subtitle</h2>
+    </header>
+    <nav>
+        <div id="input-columns">
+            <form action="">
+                <input type="text" name="" id="textChange">
+                <button type="" onclick="changeH1andTitle(event)">changeH1andTitle</button>
+                <br>
+                <label for="id">Id:</label>
+                <input type="number" name="" id="id" class="newStudents">
+                <label for="name">Name:</label>
+                <input type="text" name="Name" id="name" class="newStudents">
+                <label for="surname">Surname:</label>
+                <input type="text" name="" id="surname" class="newStudents">
+                <label for="age">Age:</label>
+                <input type="number" name="" id="age" class="newStudents">
+                <label for="email">Email:</label>
+                <input type="text" name="" id="email" class="newStudents">
+                <button type="button" onclick="addStudent()">Add Student</button>
+                <button id="redList" onclick="colorList(event)">Color list red</button>
+                <button id="countpara" onclick="oneMoreCountandPara(event)">Count Para</button>
+                <button id="swapHeaderandSubtitle" onclick="swapHeaderAndSubtitle(event)">swapHeaderandSubtitle</button>
+                <button id="backgroundColor" onclick="randomBackgroundColor(event)">randomBackgroundColor</button>
+                <input type="color" name="" id="colorPicker" onchange="changeColorHeader(event)">
+                <select name="" id="selection" onchange="changeHeadingtoMovieName()">
+                    <option value="Pulp Fiction">Pulp Fiction</option>
+                    <option value="Dawn Till Dusk">Dawn Till dusk</option>
+                </select>
+            </form>
+        </div>
+    </nav>
+    <div id="tableDiv">
+        <!-- <button id="deleteTd" onclick="deleteTd()">deleteRandomCell</button>
+        <button id="deleteTd" onclick="removeTable()">deleteTable</button> -->
+    </div>
+    <section id="enrolledStudents-container">
+        <h3>Enrolled Students</h3>
+        <h5 id="count">Counter</h5>
+        <ul id="enrolledStudentsList"></ul>
+    </section>
+    <script>
+        let headRow = ['ID', 'Name', 'Surname', 'Age', 'Email', 'Actions']
+        const createTable = (c, r) => {
+            let table = document.createElement("table")
+            table.id = "table"
+            for (let i = 1; i <= r; i++) {
+                let tr = document.createElement("tr")
+                tr.classList.add('test')
+                if (i === 1) {
+                    headRow.forEach(element => {
+                        let th = document.createElement("th")
+                        th.innerText = element
+                        tr.appendChild(th)
+                    });
+                    table.appendChild(tr)
+                } else {
+                    for (let j = 1; j <= c; j++) {
+                        if (j === 1) {
+                            let td = document.createElement("td")
+                            td.innerText = `${i-1}`
+                            tr.appendChild(td)
+                        } else {
+                            let td = document.createElement("td")
+                            td.innerText = `${j}`
+                            tr.appendChild(td)
+                        }
+
+                    }
+                    table.appendChild(tr)
+                }
+            }
+            document.getElementById("tableDiv").appendChild(table)
+        }
+        createTable(6, 4)
+
+        const addLinks = () => {
+            let rows = document.getElementById("table").children
+            for (let i = 1; i < rows.length; i++) {
+                let link = document.createElement("a")
+                link.href = "https://www.facebook.com/DipmaxMachinery"
+                link.innerText = rows[i].children[0].innerText
+                rows[i].children[0].innerText = ""
+                rows[i].children[0].appendChild(link)
+            }
+
+        }
+        addLinks()
+
+        const changeH1andTitle = (event) => {
+            event.preventDefault()
+            let text = document.getElementById("textChange").value
+            if (text !== "") {
+                let h1 = document.getElementsByTagName("h1")[0]
+                document.title = text
+                h1.innerText = text
+            } else {
+                alert('Please fill the field')
+            }
+        }
+
+        const actionButtons = () => {
+            let rows = document.getElementById("table").children
+            let td = document.createElement("td")
+            for (let i = 1; i < rows.length; i++) {
+                let button = document.createElement("button")
+                button.innerText = "+"
+                button.addEventListener("click", () => {
+                        addListItem(event)
+                        countEnrolledStudents()
+                    })
+                    // console.log('rows[i].lastChild:', rows[i].lastChild)
+                    // console.log('rows[i]:', rows[i])
+                rows[i].replaceChild(button, rows[i].lastChild)
+            }
+        }
+        actionButtons()
+
+        const addListItem = (event) => {
+            let list = document.getElementById("enrolledStudentsList")
+            let li = document.createElement("li")
+            let student = ""
+            let inputs = event.currentTarget.parentElement.children
+            for (let i = 0; i < inputs.length - 1; i++) {
+                student += `${inputs[i].innerText} `
+            }
+            li.innerText = student
+            let button = document.createElement("button")
+            button.innerText = "Remove"
+            button.addEventListener("click", (event) => {
+                event.currentTarget.parentElement.remove()
+                countEnrolledStudents()
+            })
+            li.appendChild(button)
+            list.appendChild(li)
+        }
+
+        const addStudent = () => {
+            let inputs = document.getElementsByClassName("newStudents")
+            console.log('inputs:', inputs)
+            let table = document.getElementById("table")
+            let newRow = document.createElement("tr")
+            newRow.classList.add("test")
+            for (const input of inputs) {
+                let td = document.createElement("td")
+                td.innerText = input.value
+                input.value = ""
+                newRow.appendChild(td)
+            }
+            let button = document.createElement("button")
+            button.innerText = "+"
+            button.addEventListener("click", (event) => {
+                addListItem(event)
+                countEnrolledStudents()
+            })
+            newRow.append(button)
+            table.insertBefore(newRow, table.lastChild.nextElementSibling)
+        }
+
+        const countEnrolledStudents = () => {
+            let count = document.getElementById("count")
+            let list = document.getElementById("enrolledStudentsList").children
+            count.innerText = `Count: ${list.length}`
+        }
+
+        const colorList = () => {
+                event.preventDefault()
+                let list = document.getElementById("enrolledStudentsList").children
+                console.log('list:', list)
+                for (const item of list) {
+                    if (item.style.color === "" || item.style.color === "") {
+                        item.style.color = "red"
+                    } else {
+                        item.style.color = "auto"
+                    }
+
+                }
+            }
+            //     EX16.: Add somewhere a button, on click, it changes the color of each item in the list in RED
+
+        const oneMoreCountandPara = () => {
+            event.preventDefault()
+            let listSection = document.getElementById("enrolledStudents-container")
+
+            let listLength = document.getElementById("enrolledStudentsList").children.length
+            let p = document.createElement("p")
+            if (listSection.querySelector("p") !== null) {
+                listSection.lastChild.remove()
+            }
+            p.innerText = `One more count ${listLength}`
+            listSection.appendChild(p)
+        }
+        const swapHeaderAndSubtitle = () => {
+            event.preventDefault()
+            let header = document.getElementsByTagName("header")[0]
+            header.insertBefore(header.querySelector("h2"), header.querySelector("h1"))
+        }
+
+
+        const randomColor = () => {
+            return `rgb(${Math.floor(Math.random()*256)},${Math.floor(Math.random()*256)},${Math.floor(Math.random()*256)})`
+        }
+        const randomBackgroundColor = () => {
+            event.preventDefault()
+            let table = document.getElementById("table")
+            table.style.backgroundColor = randomColor()
+        }
+
+        const changeColorHeader = (event) => {
+            event.preventDefault()
+            let header = document.getElementsByTagName("header")[0]
+            let colorPicker = document.getElementById("colorPicker")
+            header.style.backgroundColor = colorPicker.value
+        }
+
+        const changeHeadingtoMovieName = (event) => {
+            let heading = document.getElementsByTagName("header")[0].querySelector("h1")
+            console.log('heading:', heading)
+            let selection = document.getElementById("selection")
+            console.log('selection:', selection.value)
+            heading.innerText = selection.value
+        }
+
+        // EX17.: Add somewhere a button, on click, it counts the number of entry in the list and shows it in a newly created paragraph
+
+
+
+        // EX18.: Add somewhere a button, on click, it swaps HEADER and Subtitle
+        // EX19.: Add somewhere a button, on click, change the table background to a random color
+        // EX20.: Add a "color picker" to the page, when the color changes, apply it to the header
+        // EX21.: Add a dropdown (<select> tag), with your fav movies. When one is selected, change the heading of the page with the selected value
+    </script>
+</body>
+
+</html>
